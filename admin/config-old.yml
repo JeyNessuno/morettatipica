@@ -1,5 +1,6 @@
 backend:
   name: git-gateway
+  repo: JeyNessuno/morettatipica
 
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
@@ -9,7 +10,9 @@ collections:
     label: "Posts"
     folder: "posts"
     create: true
+    slug: "{{slug}}"
 
     fields:
       - { label: "Title", name: "title", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime" }
       - { label: "Body", name: "body", widget: "markdown" }
