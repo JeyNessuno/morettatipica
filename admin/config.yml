@@ -2,6 +2,7 @@
 # This file tells the CMS where to store content and how to authenticate.
 backend:
   name: git-gateway
+  branch: main
   # Use Netlify Identity + Git Gateway for repository authentication.
 
 media_folder: "images/uploads"
