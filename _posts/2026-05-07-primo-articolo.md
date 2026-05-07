@@ -1,6 +1,7 @@
 ---
 title: "Il primo raccolto della Moretta"
 date: "2026-05-07T10:00:00"
+layout: post
 ---
 
 La stagione è iniziata con una fioritura rigogliosa e un profumo di maggio unico.

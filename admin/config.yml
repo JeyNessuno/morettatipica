@@ -8,9 +8,11 @@ public_folder: "/images/uploads"
 collections:
   - name: "posts"
     label: "Posts"
-    folder: "posts"
+    folder: "_posts"
+    # Jekyll requires posts in _posts/ directory for GitHub Pages
     create: true
-    slug: "{{slug}}"
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    # File naming follows Jekyll convention: YYYY-MM-DD-slug.md
 
     fields:
       - label: "Layout"

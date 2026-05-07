@@ -1,0 +1,32 @@
+# Jekyll configuration for GitHub Pages
+# This enables Jekyll to process Markdown files and Liquid templates
+
+title: Ciliegia Moretta di Vignola
+description: Ciliegia Moretta di Vignola - storie di raccolta, ricette e biodiversità del nostro presidio
+url: ""
+baseurl: ""
+
+# Build settings
+theme: minima
+markdown: kramdown
+highlighter: rouge
+
+# Collections
+collections:
+  posts:
+    output: true
+    permalink: /:collection/:year/:month/:day/:slug.html
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+# Excludes from build
+exclude:
+  - admin/
+  - config.yml
+  - README.md
+  - .git/
+  - .gitignore
+  - node_modules/

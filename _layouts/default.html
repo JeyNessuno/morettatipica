@@ -1,18 +1,100 @@
 <!doctype html>
-<html>
+<html lang="it">
 <head>
   <meta charset="utf-8">
-  <title>{{ page.title }}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title }} - {% endif %}Ciliegia Moretta di Vignola</title>
+  <meta name="description" content="Ciliegia Moretta di Vignola: storia, biodiversità e prenotazioni dirette dai produttori. Scopri il presidio, leggi il blog e contattaci per acquistare ciliegie." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400,600,700&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cherry: #b3122b;
+      --cherry-dark: #7a0f22;
+      --leaf: #2f5d3a;
+      --cream: #f6f2ea;
+      --stone: #e6dfd2;
+      --ink: #1a1a1a;
+      --shadow: 0 20px 40px rgba(18, 18, 18, 0.12);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Work Sans", system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      background: radial-gradient(1200px 800px at 80% -10%, #ffffff 0%, var(--cream) 55%, #efe6d7 100%);
+      line-height: 1.7;
+    }
+    .container {
+      width: min(1100px, 92vw);
+      margin: 0 auto;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(8px);
+      background: rgba(246, 242, 234, 0.95);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      font-size: 14px;
+    }
+    a {
+      color: var(--cherry);
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    nav a {
+      margin-right: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+    }
+    main {
+      min-height: calc(100vh - 200px);
+      padding: 60px 0;
+    }
+    footer {
+      background: var(--cherry-dark);
+      color: #fff;
+      padding: 30px 0;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+    h1, h2, h3 { font-family: "Fraunces", serif; }
+    h1 { font-size: clamp(2rem, 4vw, 3.6rem); }
+  </style>
 </head>
 <body>
+  <header>
+    <div class="container nav">
+      <div style="display: flex; align-items: center; gap: 10px;">
+        <strong style="font-size: 20px;">🍒</strong>
+        <strong><a href="/" style="color: var(--ink);">Ciliegia Moretta</a></strong>
+      </div>
+      <nav>
+        <a href="/">Home</a>
+        <a href="/blog/">Blog</a>
+      </nav>
+    </div>
+  </header>
 
-<nav>
-  <a href="/">Home</a>
-</nav>
+  <main class="container">
+    {{ content }}
+  </main>
 
-<hr>
-
-{{ content }}
-
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Ciliegia Moretta di Vignola. Tutti i diritti riservati.</p>
+    </div>
+  </footer>
 </body>
 </html>
