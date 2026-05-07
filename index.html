@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ciliegia Moretta di Vignola — Storia, Presidio, Prenotazioni</title>
+  <meta name="description" content="Ciliegia Moretta di Vignola: storia, biodiversità e prenotazioni dirette dai produttori. Scopri il presidio, leggi il blog e contattaci per acquistare ciliegie." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400,600,700&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cherry: #b3122b;
+      --cherry-dark: #7a0f22;
+      --leaf: #2f5d3a;
+      --cream: #f6f2ea;
+      --stone: #e6dfd2;
+      --ink: #1a1a1a;
+      --gold: #c9a35a;
+      --shadow: 0 20px 40px rgba(18, 18, 18, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Work Sans", system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      background: radial-gradient(1200px 800px at 80% -10%, #ffffff 0%, var(--cream) 55%, #efe6d7 100%);
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1100px, 92vw);
+      margin: 0 auto;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(8px);
+      background: rgba(246, 242, 234, 0.85);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: "Fraunces", serif;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
+    .brand-badge {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(145deg, var(--cherry), var(--cherry-dark));
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-size: 18px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 22px;
+      font-weight: 500;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .nav-links a {
+      padding-bottom: 4px;
+      border-bottom: 2px solid transparent;
+    }
+
+    .nav-links a:hover {
+      border-color: var(--cherry);
+    }
+
+    .cta {
+      background: var(--cherry);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-weight: 600;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease;
+    }
+
+    .cta:hover {
+      transform: translateY(-2px);
+    }
+
+    .hero {
+      position: relative;
+      padding: 90px 0 80px;
+      overflow: hidden;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-family: "Fraunces", serif;
+      font-size: clamp(2.4rem, 4vw, 4rem);
+      margin: 0 0 16px;
+    }
+
+    .hero p {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      margin-bottom: 28px;
+      max-width: 520px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .ghost {
+      border: 1px solid var(--cherry);
+      padding: 10px 18px;
+      border-radius: 999px;
+      font-weight: 600;
+      color: var(--cherry);
+      background: transparent;
+    }
+
+    .hero-card {
+      background: #fff;
+      border-radius: 28px;
+      padding: 32px;
+      box-shadow: var(--shadow);
+      position: relative;
+    }
+
+    .hero-card::after {
+      content: "";
+      position: absolute;
+      inset: auto -20% -20% auto;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(179, 18, 43, 0.24), transparent 65%);
+      z-index: 0;
+    }
+
+    .hero-card-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(47, 93, 58, 0.12);
+      color: var(--leaf);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-weight: 600;
+    }
+
+    .hero-card h3 {
+      margin: 18px 0 10px;
+      font-family: "Fraunces", serif;
+      font-size: 1.6rem;
+    }
+
+    .hero-card ul {
+      list-style: none;
+      padding: 0;
+      margin: 18px 0 0;
+      display: grid;
+      gap: 10px;
+    }
+
+    .hero-card li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.95rem;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      background: var(--cherry);
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px rgba(179, 18, 43, 0.12);
+    }
+
+    .section {
+      padding: 80px 0;
+    }
+
+    .section-title {
+      font-family: "Fraunces", serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      margin-bottom: 20px;
+    }
+
+    .section-subtitle {
+      max-width: 640px;
+      color: rgba(0, 0, 0, 0.7);
+      line-height: 1.7;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 24px;
+      margin-top: 36px;
+    }
+
+    .feature {
+      background: #fff;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-4px);
+    }
+
+    .feature h4 {
+      margin: 14px 0 8px;
+      font-size: 1.1rem;
+    }
+
+    .feature p {
+      color: rgba(0, 0, 0, 0.65);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    .divider {
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--cherry), transparent);
+      margin: 50px 0;
+      opacity: 0.5;
+    }
+
+    .story {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+      align-items: center;
+    }
+
+    .story-card {
+      background: var(--leaf);
+      color: #fff;
+      border-radius: 26px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .story-card h3 {
+      margin-top: 0;
+      font-family: "Fraunces", serif;
+      font-size: 1.5rem;
+    }
+
+    .blog {
+      background: linear-gradient(160deg, #fff 0%, #f4eee4 100%);
+    }
+
+    .blog-card {
+      background: #fff;
+      border-radius: 22px;
+      padding: 24px;
+      display: grid;
+      gap: 16px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+
+    .blog-card .tag {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--cherry);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .blog-card h4 {
+      font-family: "Fraunces", serif;
+      font-size: 1.3rem;
+      margin: 0;
+    }
+
+    .blog-card p {
+      margin: 0;
+      color: rgba(0, 0, 0, 0.7);
+      line-height: 1.6;
+    }
+
+    .blog-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      color: rgba(0, 0, 0, 0.5);
+    }
+
+    .contact {
+      position: relative;
+      padding-bottom: 100px;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 30px;
+      align-items: start;
+    }
+
+    .contact-card {
+      background: #fff;
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .contact-card h3 {
+      margin-top: 0;
+      font-family: "Fraunces", serif;
+    }
+
+    form {
+      display: grid;
+      gap: 16px;
+    }
+
+    label {
+      display: grid;
+      gap: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      font-family: inherit;
+      background: #fcfbf8;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .submit {
+      border: none;
+      cursor: pointer;
+    }
+
+    footer {
+      background: var(--cherry-dark);
+      color: #fff;
+      padding: 30px 0;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .floating-shape {
+      position: absolute;
+      inset: -20% auto auto -10%;
+      width: 260px;
+      height: 260px;
+      background: radial-gradient(circle, rgba(201, 163, 90, 0.25), transparent 70%);
+      z-index: -1;
+      animation: float 10s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(18px); }
+    }
+
+    @media (max-width: 760px) {
+      .nav-links {
+        display: none;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="brand-badge">CM</div>
+        Ciliegia Moretta
+      </div>
+      <nav class="nav-links">
+        <a href="#presidio">Presidio</a>
+        <a href="#biodiversita">Biodiversita</a>
+        <a href="#blog">Blog</a>
+        <a href="#contatti">Contatti</a>
+      </nav>
+      <a class="cta" href="#contatti">Prenota ora</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <h1>La ciliegia antica di Vignola, coltivata con cura e pazienza.</h1>
+          <p>
+            La Moretta e un frutto raro: custodisce la biodiversita e racconta la storia di un territorio.
+            Coltiviamo in modo sostenibile, raccogliamo a mano e consegniamo direttamente dai produttori.
+          </p>
+          <div class="hero-actions">
+            <a class="cta" href="#contatti">Acquista le ciliegie</a>
+            <a class="ghost" href="#blog">Leggi il blog</a>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="hero-card-content">
+            <span class="pill">Presidio locale</span>
+            <h3>Una comunita di produttori</h3>
+            <p>
+              Ogni raccolto e limitato, per questo apriamo prenotazioni a finestre.
+              Selezioniamo solo frutti maturi, sodi e profumati.
+            </p>
+            <ul>
+              <li><span class="dot"></span>Raccolta manuale e selezione in campo</li>
+              <li><span class="dot"></span>Packaging senza plastica</li>
+              <li><span class="dot"></span>Consegna in 24/48 ore</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="presidio">
+      <div class="container">
+        <h2 class="section-title">Presidio e disciplinare</h2>
+        <p class="section-subtitle">
+          Dal 2018 la Moretta e riconosciuta come presidio territoriale. Un patto di qualita che tutela
+          coltivazioni tradizionali, stagionalita e rispetto per la terra.
+        </p>
+        <div class="grid-3">
+          <article class="feature">
+            <span class="pill">Territorio</span>
+            <h4>Suolo vivo</h4>
+            <p>Coltiviamo con metodi biologici o integrati, senza diserbo chimico.</p>
+          </article>
+          <article class="feature">
+            <span class="pill">Selezione</span>
+            <h4>Solo pezzatura medio-grande</h4>
+            <p>Ogni ciliegia viene raccolta a mano e controllata una per una.</p>
+          </article>
+          <article class="feature">
+            <span class="pill">Stagione</span>
+            <h4>Metta maggio - fine giugno</h4>
+            <p>Produzione limitata e prenotazioni scaglionate per garantire freschezza.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="section" id="biodiversita">
+      <div class="container story">
+        <div>
+          <h2 class="section-title">Biodiversita da proteggere</h2>
+          <p class="section-subtitle">
+            Un albero di Moretta inizia a dare frutto dopo sei anni: e un investimento lento,
+            ma fondamentale per evitare l'estinzione di questa varieta antica.
+          </p>
+          <p class="section-subtitle">
+            Scegliendo la Moretta sostieni il sapere contadino, la diversita agricola e un futuro
+            piu equilibrato per il paesaggio di Vignola.
+          </p>
+        </div>
+        <div class="story-card">
+          <h3>Nel nostro frutteto</h3>
+          <p>
+            Custodiamo 120 piante storiche e piantiamo nuovi alberi ogni stagione.
+            Il 10% di ogni vendita sostiene nuove piantumazioni e laboratori educativi.
+          </p>
+          <p>
+            Vuoi visitare? Organizziamo giornate in campo per scuole e famiglie.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section blog" id="blog">
+      <div class="container">
+        <h2 class="section-title">Dal blog</h2>
+        <p class="section-subtitle">
+          Storie di raccolta, ricette e aggiornamenti dal presidio. Tutto in italiano e scritto dai produttori.
+        </p>
+        <div class="grid-3">
+          <article class="blog-card">
+            <span class="tag">Stagione</span>
+            <h4>Il profumo della prima raccolta 2026</h4>
+            <p>Le temperature miti hanno anticipato la fioritura. Ecco come ci prepariamo alla raccolta.</p>
+            <div class="blog-meta">
+              <span>5 maggio 2026</span>
+              <span>4 min</span>
+            </div>
+          </article>
+          <article class="blog-card">
+            <span class="tag">Ricette</span>
+            <h4>Crostata soffice con Moretta fresca</h4>
+            <p>Una ricetta semplice con impasto al miele e ciliegie lasciate intere.</p>
+            <div class="blog-meta">
+              <span>28 aprile 2026</span>
+              <span>6 min</span>
+            </div>
+          </article>
+          <article class="blog-card">
+            <span class="tag">Comunità</span>
+            <h4>Nuovi alberi, nuove famiglie</h4>
+            <p>Raccontiamo il progetto di adozione degli alberi e i risultati del primo anno.</p>
+            <div class="blog-meta">
+              <span>12 aprile 2026</span>
+              <span>3 min</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section contact" id="contatti">
+      <div class="floating-shape"></div>
+      <div class="container contact-grid">
+        <div class="contact-card">
+          <h3>Prenota le ciliegie</h3>
+          <p>
+            Compila il modulo e ti risponderemo con disponibilita, prezzi e modalita di consegna.
+            Le prenotazioni aprono ogni settimana da meta maggio a fine giugno.
+          </p>
+          <ul>
+            <li>Consegna refrigerata in Italia</li>
+            <li>Ritiro in azienda su appuntamento</li>
+            <li>Pagamenti con bonifico o carta</li>
+          </ul>
+        </div>
+        <div class="contact-card">
+          <h3>Contattaci</h3>
+          <form>
+            <label>
+              Nome e cognome
+              <input type="text" name="nome" placeholder="Es. Martina Rossi" required />
+            </label>
+            <label>
+              Email
+              <input type="email" name="email" placeholder="martina@email.it" required />
+            </label>
+            <label>
+              Quantita desiderata
+              <select name="quantita" required>
+                <option value="">Seleziona</option>
+                <option>2 kg</option>
+                <option>5 kg</option>
+                <option>10 kg</option>
+                <option>Oltre 10 kg</option>
+              </select>
+            </label>
+            <label>
+              Messaggio
+              <textarea name="messaggio" placeholder="Preferenze di consegna, date, note..."></textarea>
+            </label>
+            <button class="cta submit" type="submit">Invia richiesta</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Ciliegia Moretta di Vignola. Tutti i diritti riservati.</p>
+    </div>
+  </footer>
+</body>
+</html>
