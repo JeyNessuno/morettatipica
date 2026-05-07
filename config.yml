@@ -1,0 +1,9 @@
+title: My Site
+description: My CMS-powered site
+
+markdown: kramdown
+
+collections:
+  posts:
+    output: true
+    permalink: /posts/:title/

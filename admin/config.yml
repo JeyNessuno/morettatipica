@@ -1,31 +1,33 @@
-# Decap CMS configuration for Netlify Identity + Git Gateway
-# This file tells the CMS where to store content and how to authenticate.
 backend:
   name: git-gateway
   branch: main
-  # Use Netlify Identity + Git Gateway for repository authentication.
 
 media_folder: "images/uploads"
-# Files uploaded through the CMS are saved to the `images/uploads` folder in the repo.
 public_folder: "/images/uploads"
-# Public URL path for uploaded media when the site is served.
 
 collections:
   - name: "posts"
     label: "Posts"
     folder: "posts"
     create: true
-    # Allow creating new markdown files for blog posts.
+    slug: "{{slug}}"
 
     fields:
+      - label: "Layout"
+        name: "layout"
+        widget: "hidden"
+        default: "post"
+
       - label: "Title"
         name: "title"
         widget: "string"
         required: true
+
       - label: "Date"
         name: "date"
         widget: "datetime"
         required: true
+
       - label: "Body"
         name: "body"
         widget: "markdown"
