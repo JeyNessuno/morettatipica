@@ -190,6 +190,26 @@
       color: rgba(0, 0, 0, 0.55);
     }
 
+    .post-body {
+      margin-top: 24px;
+      color: rgba(0, 0, 0, 0.78);
+      line-height: 1.8;
+    }
+
+    .post-body p {
+      margin: 1rem 0;
+    }
+
+    .post-body a {
+      color: var(--cherry);
+      text-decoration: underline;
+    }
+
+    .post-body ul {
+      padding-left: 1.2rem;
+      margin: 1rem 0;
+    }
+
     .intro-link {
       display: inline-flex;
       align-items: center;
@@ -244,40 +264,16 @@
       <p>Storie di campo, ricette tradizionali e aggiornamenti dal presidio: tre articoli in italiano per conoscere il cuore del nostro progetto.</p>
     </section>
 
-    <section>
+    <section id="blog-list-section">
       <div class="section-title">Articoli in evidenza</div>
       <p class="section-subtitle">Leggi i nostri ultimi racconti sulla raccolta, il territorio e le ricette tipiche della Moretta.</p>
-      <div class="grid-2">
-        <article class="post-card">
-          <span class="tag">Stagione</span>
-          <h2>Il primo raccolto e l'aria di maggio</h2>
-          <p>La Fioritura ha arrivato con piogge leggere e temperature dolci. Raccontiamo la preparazione della squadra e le prime ore in campo.</p>
-          <div class="post-meta">
-            <span>5 maggio 2026</span>
-            <span>5 min</span>
-          </div>
-        </article>
-
-        <article class="post-card">
-          <span class="tag">Ricetta</span>
-          <h2>Crostata di Moretta senza burro</h2>
-          <p>Una dolcezza leggera con impasto al miele, crema di mandorle e frutti appena raccolti. Una ricetta perfetta per la tavola di primavera.</p>
-          <div class="post-meta">
-            <span>28 aprile 2026</span>
-            <span>7 min</span>
-          </div>
-        </article>
-
-        <article class="post-card">
-          <span class="tag">Territorio</span>
-          <h2>La storia di un ciliegio ritrovato</h2>
-          <p>Un albero antico salvato dall'abbandono e reinserito nel nostro frutteto. Una figura simbolo del recupero della biodiversità.</p>
-          <div class="post-meta">
-            <span>12 aprile 2026</span>
-            <span>4 min</span>
-          </div>
-        </article>
+      <div id="posts-list" class="grid-2">
+        <p>Caricamento dei post...</p>
       </div>
+    </section>
+
+    <section id="post-detail-section" style="display:none; margin-top: 60px;">
+      <div id="post-detail" class="post-card"></div>
     </section>
 
     <section style="margin-top: 60px;">
@@ -292,5 +288,187 @@
       <p>&copy; 2026 Ciliegia Moretta di Vignola. Tutti i diritti riservati.</p>
     </div>
   </footer>
+
+  <script>
+    const listSection = document.getElementById('blog-list-section');
+    const postsList = document.getElementById('posts-list');
+    const postDetailSection = document.getElementById('post-detail-section');
+    const postDetail = document.getElementById('post-detail');
+
+    function getQueryParam(name) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(name);
+    }
+
+    function parseFrontmatter(raw) {
+      const match = raw.match(/^---\s*\r?\n([\s\S]*?)\r?\n---\s*\r?\n([\s\S]*)$/);
+      if (!match) {
+        return { data: {}, content: raw };
+      }
+
+      const yaml = match[1];
+      const content = match[2];
+      const data = {};
+
+      yaml.split(/\r?\n/).forEach(line => {
+        const index = line.indexOf(':');
+        if (index === -1) return;
+        const key = line.slice(0, index).trim();
+        let value = line.slice(index + 1).trim();
+        if (value.startsWith('"') && value.endsWith('"')) {
+          value = value.slice(1, -1);
+        }
+        data[key] = value;
+      });
+
+      return { data, content };
+    }
+
+    function escapeHtml(text) {
+      return text.replace(/[&<>]/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[char]));
+    }
+
+    function renderMarkdown(raw) {
+      const escaped = escapeHtml(raw);
+      const lines = escaped.split(/\r?\n/);
+      let html = '';
+      let inList = false;
+
+      lines.forEach((line, index) => {
+        const trimmed = line.trim();
+
+        if (trimmed.startsWith('### ')) {
+          html += closeList();
+          html += `<h3>${formatInline(trimmed.slice(4))}</h3>`;
+        } else if (trimmed.startsWith('## ')) {
+          html += closeList();
+          html += `<h2>${formatInline(trimmed.slice(3))}</h2>`;
+        } else if (trimmed.startsWith('# ')) {
+          html += closeList();
+          html += `<h1>${formatInline(trimmed.slice(2))}</h1>`;
+        } else if (trimmed.startsWith('- ')) {
+          if (!inList) {
+            inList = true;
+            html += '<ul>';
+          }
+          html += `<li>${formatInline(trimmed.slice(2))}</li>`;
+        } else if (trimmed === '') {
+          html += closeList();
+        } else {
+          html += closeList();
+          html += `<p>${formatInline(trimmed)}</p>`;
+        }
+
+        function closeList() {
+          if (inList) {
+            inList = false;
+            return '</ul>';
+          }
+          return '';
+        }
+      });
+
+      if (inList) html += '</ul>';
+      return html;
+    }
+
+    function formatInline(text) {
+      return text
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+        .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+    }
+
+    function formatDate(value) {
+      const date = new Date(value);
+      return date.toLocaleDateString('it-IT', { year: 'numeric', month: 'long', day: 'numeric' });
+    }
+
+    function renderPostCard(post) {
+      const excerpt = post.excerpt || '';
+      const article = document.createElement('article');
+      article.className = 'post-card';
+      article.innerHTML = `
+        <div>
+          <h2>${escapeHtml(post.title)}</h2>
+          <p>${escapeHtml(excerpt)}</p>
+        </div>
+        <div class="post-meta">
+          <span>${formatDate(post.date)}</span>
+          <a class="cta" href="blog.html?post=${encodeURIComponent(post.file)}">Leggi</a>
+        </div>
+      `;
+      return article;
+    }
+
+    function renderPostPage(post, contentHtml) {
+      postDetail.innerHTML = `
+        <div class="post-card">
+          <span class="tag">Post</span>
+          <h1>${escapeHtml(post.title)}</h1>
+          <div class="post-meta">
+            <span>${formatDate(post.date)}</span>
+          </div>
+          <div class="post-body">${contentHtml}</div>
+          <p><a class="cta" href="blog.html">Torna a tutti gli articoli</a></p>
+        </div>
+      `;
+      postDetailSection.style.display = 'block';
+      listSection.style.display = 'none';
+    }
+
+    function extractExcerpt(content) {
+      const paragraphs = content.trim().split(/\r?\n\r?\n/);
+      if (paragraphs.length === 0) return '';
+      return paragraphs[0].replace(/\n/g, ' ').slice(0, 220) + '...';
+    }
+
+    function showError(message) {
+      postsList.innerHTML = `<p>${escapeHtml(message)}</p>`;
+      postDetailSection.style.display = 'none';
+    }
+
+    async function loadPosts() {
+      try {
+        const response = await fetch('posts.json');
+        if (!response.ok) throw new Error('Impossibile caricare posts.json');
+        const posts = await response.json();
+        posts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        const selectedPost = getQueryParam('post');
+        if (selectedPost) {
+          const postMeta = posts.find(post => post.file === selectedPost);
+          if (!postMeta) {
+            showError('Post non trovato.');
+            return;
+          }
+          const postResponse = await fetch(`posts/${postMeta.file}`);
+          if (!postResponse.ok) throw new Error('Impossibile caricare il post.');
+          const raw = await postResponse.text();
+          const { data, content } = parseFrontmatter(raw);
+          renderPostPage({ title: data.title || postMeta.title, date: data.date || postMeta.date }, renderMarkdown(content));
+          return;
+        }
+
+        postsList.innerHTML = '';
+        for (const post of posts) {
+          const postCopy = { ...post, excerpt: extractExcerpt(post.description || '') };
+          const postResponse = await fetch(`posts/${post.file}`);
+          if (postResponse.ok) {
+            const raw = await postResponse.text();
+            const { data, content } = parseFrontmatter(raw);
+            postCopy.title = data.title || post.title;
+            postCopy.date = data.date || post.date;
+            postCopy.excerpt = extractExcerpt(content);
+          }
+          postsList.appendChild(renderPostCard(postCopy));
+        }
+      } catch (error) {
+        showError(error.message);
+      }
+    }
+
+    loadPosts();
+  </script>
 </body>
 </html>
